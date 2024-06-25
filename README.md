@@ -84,13 +84,9 @@ _____________________________________
 
   ___________________________________
 
-  ## Important Query Variables
+  ### Other Important Variables
 
-- **data:** Data returned from the mutation operation.
-- **error:** Error that occurred during the mutation.
-- **isError:** Indicates whether an error occurred during the mutation.
 - **isIdle:** Indicates that the mutation has not started yet.
-- **isPending:** Indicates that the mutation is currently in progress.
 - **isPaused:** Indicates that the mutation is paused.
 - **isSuccess:** Indicates that the mutation has successfully completed.
 - **failureCount:** Number of failed attempts for the mutation.
@@ -98,16 +94,50 @@ _____________________________________
 - **mutate:** Function that triggers the mutation operation.
 - **mutateAsync:** Asynchronous function that triggers the mutation operation.
 - **reset:** Function that resets the state of the mutation.
-- **status:** Current status of the mutation.
-- **submittedAt:** Timestamp indicating when the mutation was submitted.
-- **variables:** Variables used for the mutation operation.
+_________________________________
 
-## TanStack Query with Axios
+## Important Defaults
+
+- ### refetchInterval
+Specifies the interval at which a query should automatically refetch data. For example, it can be set to refetch the query every 5 minutes.
+- ### refetchOnWindowFocus**
+Determines whether a query should automatically refetch data when the browser window is focused.
+- ### gcTime
+Specifies how long cached data should be kept before potentially being garbage collected (cleaned up) from the cache.
+- ### retry
+Specifies the number of times a query should retry in case of failure. For example, it can be set to retry 3 times.
+
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchInterval: 5000, // 5 seconds
+      refetchOnWindowFocus: true,
+      gcTime: 3600000, // 1 hour in milliseconds
+      retry: 3, // Retry 3 times on failure
+    },
+  },
+});
+
+ReactDOM.render(
+  <QueryClientProvider client={queryClient}>
+    <App />
+  </QueryClientProvider>,
+  document.getElementById('root')
+);
+```
+
+## Query with Axios
 
 ### useQuery Implementation
 
 ```jsx
-import React from 'react'; // Import React library
+import React from 'react'; 
 import { useQuery } from 'react-query'; // Import useQuery hook from react-query library
 import axios from 'axios'; // Import axios library for making HTTP requests
 
@@ -119,7 +149,7 @@ const fetchData = async () => {
   return response.data; // Return the data from the response
 };
 
-// Functional component UsersComponent
+
 const UsersComponent = () => {
   // useQuery hook to fetch data and manage loading and success states
   const { data, isLoading, isSuccess } = useQuery({ queryKey: ['users'], queryFn: fetchData });
@@ -130,7 +160,7 @@ const UsersComponent = () => {
   // Render error message if fetching data was not successful
   if (!isSuccess) return <p>Failed to fetch data.</p>;
 
-  // Render the list of users if data fetching was successful
+
   return (
     <ul>
       {data.map((user) => (
@@ -170,3 +200,11 @@ export default UsersComponent; // Export UsersComponent as default
 
 ✦ **UserUpdateMutation.mutate(newUser)** ✦
 - Function call in React Query that triggers the execution of a mutation operation (addUserMutation in this case) with the provided newUser data. This function initiates an asynchronous process where newUser is sent to the server to add a new user, and upon successful completion, it invalidates the 'users' queries to ensure the updated data is fetched and displayed across the application.
+
+________________________________________________________________________________________
+
+### Many other features are in my project files. You can also visit TanStack Query for more resources.
+
+https://tanstack.com/query/latest
+
+See you later 👋
