@@ -1,0 +1,25 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "email": "hamza@gmail.com",
+      "password": "123",
+      "country": "Turkiye",
+      "username": "Hamza Doğan"
+    },
+    {
+      "id": "2",
+      "email": "okan123@gmail.com",
+      "password": "1245",
+      "country": "Germany",
+      "username": "Okan Doğan"
+    },
+    {
+      "id": "3",
+      "email": "shadel@gmail.com",
+      "password": "343",
+      "country": "Canada",
+      "username": "Shadel"
+    }
+  ]
+}
